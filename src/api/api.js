@@ -18,6 +18,9 @@ class API {
     this.posts = new PostsAPI(this.#client);
     this.users = new UsersAPI(this.#client);
   }
+  setAccessToken(token) {
+    this.#client.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
 }
 
 const api = new API();

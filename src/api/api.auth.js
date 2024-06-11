@@ -32,6 +32,16 @@ class AuthAPI {
       return error.response.data;
     }
   }
+
+  async getUser() {
+    const path = "/user";
+    try {
+      const response = await this.#axios.get(path);
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
 }
 
 export default AuthAPI;

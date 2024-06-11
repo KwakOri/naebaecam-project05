@@ -1,12 +1,18 @@
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import { Input } from "../../components";
 import useInputs from "../../hooks/useInputs";
 import { StButton, StContainer, StForm, StTitle } from "./SignUp.styled";
 
 export const SignUp = () => {
+  const navigate = useNavigate();
   const { mutateAsync: signUp } = useMutation({
     mutationFn: (formData) => api.auth.signUp(formData),
+    onSuccess: (data) => {
+      alert(data.message);
+      navigate("/login");
+    },
   });
 
   const [form, onChange] = useInputs({
@@ -31,8 +37,7 @@ export const SignUp = () => {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-    const result = await signUp(form);
-    alert(result.message);
+    await signUp(form);
   };
 
   return (

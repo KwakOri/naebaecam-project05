@@ -18,11 +18,11 @@ const router = createBrowserRouter([
     element: <APITest />,
   },
   {
-    path: "sign-up",
+    path: "signup",
     element: <SignUp />,
   },
   {
-    path: "log-in",
+    path: "login",
     element: <LogIn />,
   },
 ]);
