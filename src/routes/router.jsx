@@ -3,13 +3,14 @@ import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../layouts/Layout";
 import { APITest } from "../pages/APITest";
 import { LogIn } from "../pages/LogIn/LogIn";
+import { MyPage } from "../pages/MyPage";
 import { SignUp } from "../pages/SignUp/SignUp";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 
 const router = createBrowserRouter([
   {
-    path: "",
+    path: "/",
     element: (
       <PrivateRoute>
         <Layout />
@@ -17,17 +18,21 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/",
+        path: "home",
         element: <Home />,
       },
       {
-        path: "/detail/:id",
+        path: "detail/:id",
         element: <Detail />,
+      },
+      {
+        path: "my-page",
+        element: <MyPage />,
       },
     ],
   },
   {
-    path: "/auth",
+    path: "/",
     element: <PublicRoute />,
     children: [
       {
