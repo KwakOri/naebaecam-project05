@@ -49,7 +49,7 @@ const Form = () => {
     <StForm onSubmit={handleFormSubmit}>
       <Input
         value={date}
-        setValue={handleInputChange}
+        onChange={handleInputChange}
         type="text"
         name="date"
         label={"날짜"}
@@ -57,7 +57,7 @@ const Form = () => {
 
       <Input
         value={category}
-        setValue={handleInputChange}
+        onChange={handleInputChange}
         type="text"
         name="category"
         label={"항목"}
@@ -66,7 +66,7 @@ const Form = () => {
 
       <Input
         value={cost}
-        setValue={handleInputChange}
+        onChange={handleInputChange}
         type="number"
         name="cost"
         label={"금액"}
@@ -75,7 +75,7 @@ const Form = () => {
 
       <Input
         value={description}
-        setValue={handleInputChange}
+        onChange={handleInputChange}
         type="text"
         name="description"
         label={"내용"}
