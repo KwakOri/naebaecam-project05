@@ -1,14 +1,26 @@
 /* eslint-disable react/prop-types */
 import { Input } from "@components";
-import { addRecord } from "@redux/spendingListSlice";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getDate, validateInputs } from "@utils";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+import api from "../../api/api";
 import { StButton, StForm } from "./Form.styled";
 
 const Form = () => {
-  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const {
+    data: { id, nickname },
+    isLoading,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => api.auth.getUser(),
+  });
+
+  const { mutateAsync: postRecord } = useMutation({
+    mutationFn: (record) =>
+      api.posts.postRecord({ ...record, accountId: id, nickname }),
+  });
+
   const [inputs, setInputs] = useState({
     date: getDate(),
     category: "",
@@ -23,7 +35,7 @@ const Form = () => {
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     const isValid = validateInputs(inputs);
@@ -36,7 +48,8 @@ const Form = () => {
       return;
     }
 
-    dispatch(addRecord({ ...inputs, id: uuidv4() }));
+    await postRecord(inputs);
+    queryClient.invalidateQueries({ queryKey: ["records"] });
 
     setInputs({
       date: getDate(),
@@ -45,6 +58,8 @@ const Form = () => {
       description: "",
     });
   };
+
+  if (isLoading) return <div>Loading...</div>;
   return (
     <StForm onSubmit={handleFormSubmit}>
       <Input

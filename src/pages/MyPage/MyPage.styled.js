@@ -8,9 +8,10 @@ export const StTitle = styled.h1`
 
 export const StContainer = styled.div`
   display: flex;
+  flex: 1;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
 `;
 
 export const StForm = styled.form`
@@ -49,6 +50,9 @@ export const StTextInput = styled.div`
 `;
 
 export const StFileInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   label {
     display: flex;
     justify-content: center;
@@ -68,10 +72,26 @@ export const StFileInput = styled.div`
 `;
 
 export const StPreview = styled.div`
-  width: 100%;
+  width: 400px;
+  height: 400px;
+  border-radius: 20px;
+  box-sizing: border-box;
 `;
 
 export const PreviewImg = styled.img`
   width: 400px;
+  border-radius: 20px;
   object-fit: cover;
+`;
+
+export const PreviewDummy = styled.div`
+  width: 400px;
+  height: 400px;
+  border-radius: 20px;
+  background: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 900;
 `;

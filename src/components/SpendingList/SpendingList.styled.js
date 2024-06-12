@@ -37,6 +37,12 @@ const StSpendingItem = styled.div`
       color: #9e9e9e;
     }
 
+    .category {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: #2d2d2d;
+    }
+
     .description {
       font-size: 1rem;
       color: #212121;

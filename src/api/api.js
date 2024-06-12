@@ -3,23 +3,31 @@ import AuthAPI from "./api.auth";
 import PostsAPI from "./api.posts";
 import UsersAPI from "./api.users";
 
-const BASE_URL = "https://moneyfulpublicpolicy.co.kr";
+const JWT_BASE_URL = "https://moneyfulpublicpolicy.co.kr";
+
+const JSON_BASE_URL = "http://localhost:4000";
 
 class API {
-  #client;
+  #jwtClient;
+  #jsonClient;
   auth;
   posts;
   users;
   constructor() {
-    this.#client = axios.create({
-      baseURL: BASE_URL,
+    this.#jwtClient = axios.create({
+      baseURL: JWT_BASE_URL,
     });
-    this.auth = new AuthAPI(this.#client);
-    this.posts = new PostsAPI(this.#client);
-    this.users = new UsersAPI(this.#client);
+    this.#jsonClient = axios.create({
+      baseURL: JSON_BASE_URL,
+    });
+    this.auth = new AuthAPI(this.#jwtClient);
+    this.posts = new PostsAPI(this.#jsonClient);
+    this.users = new UsersAPI(this.#jwtClient);
   }
   setAccessToken(token) {
-    this.#client.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    this.#jwtClient.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${token}`;
   }
 }
 

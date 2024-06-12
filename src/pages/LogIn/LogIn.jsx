@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import { Input } from "../../components";
 import useInputs from "../../hooks/useInputs";
+
 import { StButton, StContainer, StForm, StTitle } from "./LogIn.styled";
 
 export const LogIn = () => {
@@ -10,16 +11,16 @@ export const LogIn = () => {
   const { mutateAsync: LogIn } = useMutation({
     mutationFn: (formData) => api.auth.logIn(formData),
     onSuccess: (data) => {
+      console.log(data);
       alert("로그인되었습니다");
-      console.log(data.accessToken);
       localStorage.setItem("accessToken", data.accessToken);
       api.setAccessToken(data.accessToken);
-      navigate("/");
+      navigate("/home");
     },
   });
 
   const [form, onChange] = useInputs({
-    email: "",
+    accountId: "",
     password: "",
   });
 

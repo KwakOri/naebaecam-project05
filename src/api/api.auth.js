@@ -17,7 +17,7 @@ class AuthAPI {
   }
 
   async logIn(formData) {
-    const path = "login?expiresIn=10m";
+    const path = "login?expiresIn=120m";
     const data = {
       id: formData.accountId,
       password: formData.password,

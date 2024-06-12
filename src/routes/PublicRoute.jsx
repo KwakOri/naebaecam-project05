@@ -17,10 +17,10 @@ export const PublicRoute = ({ children }) => {
   // if (isLoading) return <div>Loading...</div>;
   // if (data) return <Navigate to="/" />;
   return (
-    <div>
+    <>
       {children}
       <Outlet />
-    </div>
+    </>
   );
 };
 

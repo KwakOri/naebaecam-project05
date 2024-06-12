@@ -11,8 +11,8 @@ export const StNav = styled.nav`
 `;
 
 export const StButton = styled.button`
-  padding: 10px 20px;
-  height: 36px;
+  padding: 0px 20px;
+  height: 24px;
   background-color: #fff;
   color: #333;
   border: none;
@@ -57,11 +57,12 @@ export const StProfile = styled.div`
   img {
     overflow: hidden;
     object-fit: cover;
-    height: 48px;
-    width: 48px;
+    height: 36px;
+    width: 36px;
+    border-radius: 9px;
   }
   h3 {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 500;
   }
 `;

@@ -1,8 +1,9 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import {
+  PreviewDummy,
   PreviewImg,
   StButton,
   StContainer,
@@ -24,9 +25,22 @@ export const MyPage = () => {
     };
     reader.readAsDataURL(file);
   };
-  const [previewImage, setPreviewImage] = useState();
+
+  const [previewImage, setPreviewImage] = useState("");
   const avatarRef = useRef(null);
   const nicknameRef = useRef(null);
+
+  const { data: userInfo, isLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const userInfo = await api.auth.getUser();
+
+      setPreviewImage(userInfo.avatar);
+      nicknameRef.current.value = userInfo.nickname;
+
+      return userInfo;
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +53,10 @@ export const MyPage = () => {
     if (!result) return;
     queryClient.invalidateQueries("user");
     alert("변경 완료!");
+    navigate("/home");
   };
+
+  if (isLoading) return <div>loading...</div>;
   return (
     <StContainer>
       <StForm onSubmit={handleSubmit}>
@@ -55,7 +72,17 @@ export const MyPage = () => {
           />
         </StTextInput>
         <StFileInput>
-          <label htmlFor="avatar">프로필 이미지</label>
+          <label htmlFor="avatar">
+            {previewImage ? "프로필 이미지 변경하기" : "프로필 이미지 추가하기"}
+          </label>
+          <StButton
+            type="button"
+            onClick={() => {
+              setPreviewImage("");
+            }}
+          >
+            삭제
+          </StButton>
           <input
             ref={avatarRef}
             onChange={(event) => {
@@ -66,14 +93,20 @@ export const MyPage = () => {
             name="avatar"
             id="avatar"
           />
+          <StPreview>
+            {previewImage ? (
+              <PreviewImg src={previewImage} alt="미리보기" />
+            ) : (
+              <PreviewDummy>미리보기</PreviewDummy>
+            )}
+          </StPreview>
         </StFileInput>
-        <StPreview>
-          <PreviewImg src={previewImage} alt="" />
-        </StPreview>
+
         <StButton type="submit">저장</StButton>
         <StButton
+          type="button"
           onClick={() => {
-            navigate("/");
+            navigate("/home");
           }}
         >
           돌아가기

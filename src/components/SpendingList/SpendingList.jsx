@@ -1,19 +1,41 @@
+import { useNavigate } from "react-router-dom";
 /* eslint-disable react/prop-types */
+import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
+import api from "../../api/api";
 import { SpendingItem } from "./SpendingItem";
-import { NoResult, StLink, StUl } from "./SpendingList.styled";
+import { NoResult, StUl } from "./SpendingList.styled";
 
 const SpendingList = () => {
-  const spendingList = useSelector((state) => state.spendingList.list);
-  const selectedMonth = useSelector((state) => state.spendingList.month);
+  const navigate = useNavigate();
+  const { data: spendingList, isLoading } = useQuery({
+    queryKey: ["records"],
+    queryFn: () => api.posts.getRecords(),
+  });
 
-  const filteredSpendingList = spendingList.filter(
-    (spending) => new Date(spending.date).getMonth() + 1 === selectedMonth
-  );
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => api.auth.getUser(),
+  });
+
+  const selectedMonth = useSelector((state) => state.spendingList.month);
+  console.log(spendingList);
+
+  const filteredSpendingList = spendingList
+    ? spendingList.filter(
+        (spending) => new Date(spending.date).getMonth() + 1 === selectedMonth
+      )
+    : [];
+
+  console.log(filteredSpendingList);
 
   // return부분을 두 개로 나누기
 
-  if (filteredSpendingList.length === 0) {
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (filteredSpendingList?.length === 0) {
     return (
       <NoResult>
         <p>검색 결과가 없습니다.</p>
@@ -23,11 +45,18 @@ const SpendingList = () => {
 
   return (
     <StUl>
-      {filteredSpendingList.map((item) => (
-        <li key={item.id}>
-          <StLink to={`/detail/${item.id}`}>
-            <SpendingItem item={item} />
-          </StLink>
+      {filteredSpendingList?.map((item) => (
+        <li
+          key={item.id}
+          onClick={() => {
+            if (item.accountId !== user.id) {
+              alert("작성자만 조회 가능합니다.");
+              return;
+            }
+            navigate(`/detail/${item.id}`);
+          }}
+        >
+          <SpendingItem item={item} />
         </li>
       ))}
     </StUl>
