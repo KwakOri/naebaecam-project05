@@ -16,7 +16,6 @@ export const SignUp = () => {
       navigate("/login");
     },
     onError: (error) => {
-      console.log(error);
       alert(error.response.data.message);
     },
   });
@@ -88,7 +87,13 @@ export const SignUp = () => {
         <StButton type="submit" disabled={!enabled}>
           {enabled ? "회원가입" : "빈칸을 모두 채워주세요!"}
         </StButton>
-        <StButton>돌아가기</StButton>
+        <StButton
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          돌아가기
+        </StButton>
       </StForm>
     </StContainer>
   );

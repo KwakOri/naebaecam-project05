@@ -35,12 +35,3 @@ export const StButton = styled.button`
     background: #ddd;
   }
 `;
-
-export const StError = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 24px;
-  font-size: 12px;
-  color: ${(props) => (props.isError ? "red" : "green")};
-`;
