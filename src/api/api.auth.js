@@ -30,10 +30,8 @@ class AuthAPI {
     const path = "/user";
     try {
       const response = await this.#axios.get(path);
-      console.log(response);
       return response.data;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
