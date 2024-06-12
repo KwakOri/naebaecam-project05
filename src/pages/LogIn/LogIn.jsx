@@ -25,7 +25,7 @@ export const LogIn = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    if (!form.email || !form.password) {
+    if (!form.accountId || !form.password) {
       alert("모든 항목을 입력해주세요.");
       return;
     }
@@ -37,12 +37,12 @@ export const LogIn = () => {
       <StForm onSubmit={handleSignUp}>
         <StTitle>로그인</StTitle>
         <Input
-          value={form.email}
+          value={form.accountId}
           onChange={onChange}
-          type={"email"}
-          name={"email"}
-          label={"이메일"}
-          placeholder={"이메일을 입력해주세요"}
+          type={"text"}
+          name={"accountId"}
+          label={"아이디"}
+          placeholder={"아이디를 입력해주세요"}
         />
         <Input
           value={form.password}
@@ -60,7 +60,6 @@ export const LogIn = () => {
         >
           회원가입
         </StButton>
-        <StButton>돌아가기</StButton>
       </StForm>
     </StContainer>
   );

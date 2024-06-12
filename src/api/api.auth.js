@@ -17,7 +17,7 @@ class AuthAPI {
   }
 
   async logIn(formData) {
-    const path = "login";
+    const path = "login?expiresIn=10m";
     const data = {
       id: formData.accountId,
       password: formData.password,
@@ -28,8 +28,14 @@ class AuthAPI {
 
   async getUser() {
     const path = "/user";
-    const response = await this.#axios.get(path);
-    return response.data;
+    try {
+      const response = await this.#axios.get(path);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   }
 }
 

@@ -25,4 +25,9 @@ class API {
 
 const api = new API();
 
+const localAcessToken = localStorage.getItem("accessToken");
+if (localAcessToken) {
+  api.setAccessToken(localAcessToken);
+}
+
 export default api;
