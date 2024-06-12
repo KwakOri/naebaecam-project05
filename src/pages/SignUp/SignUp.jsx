@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import { Input } from "../../components";
 import useInputs from "../../hooks/useInputs";
+import { validateSignupInputs } from "../../utils/validation";
+import { Error } from "./Error";
 import { StButton, StContainer, StForm, StTitle } from "./SignUp.styled";
 
 export const SignUp = () => {
@@ -13,70 +15,79 @@ export const SignUp = () => {
       alert(data.message);
       navigate("/login");
     },
+    onError: (error) => {
+      console.log(error);
+      alert(error.response.data.message);
+    },
   });
 
   const [form, onChange] = useInputs({
-    email: "",
+    accountId: "",
     password: "",
-    confirmPassword: "",
+    passwordConfirm: "",
     nickname: "",
   });
-
   const handleSignUp = async (e) => {
     e.preventDefault();
-    if (
-      !form.email ||
-      !form.password ||
-      !form.confirmPassword ||
-      !form.nickname
-    ) {
-      alert("모든 항목을 입력해주세요.");
-      return;
-    }
-    if (form.password !== form.confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
+    const { result } = validateSignupInputs(form);
+    if (!result) return;
+
     await signUp(form);
   };
+
+  const { result: enabled, error } = validateSignupInputs(form);
 
   return (
     <StContainer>
       <StForm onSubmit={handleSignUp}>
         <StTitle>회원가입</StTitle>
-        <Input
-          value={form.email}
-          onChange={onChange}
-          type={"email"}
-          name={"email"}
-          label={"이메일"}
-          placeholder={"이메일을 입력해주세요"}
-        />
-        <Input
-          value={form.password}
-          onChange={onChange}
-          type={"password"}
-          name={"password"}
-          label={"비밀번호"}
-          placeholder={"비밀번호를 입력해주세요"}
-        />
-        <Input
-          value={form.confirmPassword}
-          onChange={onChange}
-          type={"password"}
-          name={"confirmPassword"}
-          label={"비밀번호 확인"}
-          placeholder={"비밀번호를 다시 한 번 입력해주세요"}
-        />
-        <Input
-          value={form.nickname}
-          onChange={onChange}
-          type={"text"}
-          name={"nickname"}
-          label={"닉네임"}
-          placeholder={"닉네임을 입력해주세요"}
-        />
-        <StButton type="submit">회원가입</StButton>
+        <div>
+          <Input
+            value={form.accountId}
+            onChange={onChange}
+            type={"text"}
+            name={"accountId"}
+            label={"아이디"}
+            placeholder={"아이디를 입력해주세요"}
+          />
+          <Error error={error.accountId} />
+        </div>
+        <div>
+          <Input
+            value={form.password}
+            onChange={onChange}
+            type={"password"}
+            name={"password"}
+            label={"비밀번호"}
+            placeholder={"비밀번호를 입력해주세요"}
+          />
+          <Error error={error.password} />
+        </div>
+        <div>
+          <Input
+            value={form.passwordConfirm}
+            onChange={onChange}
+            type={"password"}
+            name={"passwordConfirm"}
+            label={"비밀번호 확인"}
+            placeholder={"비밀번호를 다시 한 번 입력해주세요"}
+          />
+          <Error error={error.passwordConfirm} />
+        </div>
+        <div>
+          <Input
+            value={form.nickname}
+            onChange={onChange}
+            type={"text"}
+            name={"nickname"}
+            label={"닉네임"}
+            placeholder={"닉네임을 입력해주세요"}
+          />
+          <Error error={error.nickname} />
+        </div>
+        <StButton type="submit" disabled={!enabled}>
+          {enabled ? "회원가입" : "빈칸을 모두 채워주세요!"}
+        </StButton>
         <StButton>돌아가기</StButton>
       </StForm>
     </StContainer>

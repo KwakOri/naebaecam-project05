@@ -15,7 +15,7 @@ export const StContainer = styled.div`
 
 export const StForm = styled.form`
   width: 400px;
-  gap: 20px;
+  gap: 12px;
   display: flex;
   flex-direction: column;
   padding: 40px;
@@ -34,4 +34,13 @@ export const StButton = styled.button`
   &:hover {
     background: #ddd;
   }
+`;
+
+export const StError = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 24px;
+  font-size: 12px;
+  color: ${(props) => (props.isError ? "red" : "green")};
 `;
