@@ -5,7 +5,7 @@ import UsersAPI from "./api.users";
 
 const JWT_BASE_URL = "https://moneyfulpublicpolicy.co.kr";
 
-const JSON_BASE_URL = "http://localhost:4000";
+const JSON_BASE_URL = "https://industrious-clammy-narwhal.glitch.me";
 
 class API {
   #jwtClient;

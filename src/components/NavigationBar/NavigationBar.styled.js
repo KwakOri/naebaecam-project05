@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StNav = styled.nav`
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,6 +26,7 @@ export const StButton = styled.button`
 
 export const StTitle = styled.h1`
   font-size: 24px;
+  font-weight: 900;
   margin: 0;
   display: flex;
   align-items: center;
@@ -45,6 +47,7 @@ export const StCategoryItem = styled.button`
 `;
 
 export const StDiv = styled.div`
+  height: 100%;
   display: flex;
   align-items: center;
   gap: 20px;

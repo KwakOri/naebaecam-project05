@@ -8,7 +8,7 @@ export const StDiv = styled.div`
   flex-direction: column;
 
   width: 100%;
-  height: 100%;
+  height: 1000px;
 `;
 
 export const Layout = () => {

@@ -53,16 +53,16 @@ const Detail = () => {
     }
     await overwriteRecord(inputs);
     alert("수정이 완료되었습니다");
-    navigate("/home");
+    navigate("/");
   };
   const handleDeleteBtn = async () => {
     await deleteRecord();
 
     alert("삭제가 완료되었습니다");
-    navigate("/home");
+    navigate("/");
   };
   const handleCancelBtn = () => {
-    navigate("/home");
+    navigate("/");
   };
 
   if (isLoading) return <div>Loading...</div>;

@@ -30,7 +30,7 @@ export const MyPage = () => {
   const avatarRef = useRef(null);
   const nicknameRef = useRef(null);
 
-  const { data: userInfo, isLoading } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       const userInfo = await api.auth.getUser();
@@ -53,7 +53,7 @@ export const MyPage = () => {
     if (!result) return;
     queryClient.invalidateQueries("user");
     alert("변경 완료!");
-    navigate("/home");
+    navigate("/");
   };
 
   if (isLoading) return <div>loading...</div>;
@@ -106,7 +106,7 @@ export const MyPage = () => {
         <StButton
           type="button"
           onClick={() => {
-            navigate("/home");
+            navigate("/");
           }}
         >
           돌아가기

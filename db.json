@@ -64,6 +64,15 @@
       "description": "죽을 것 같아",
       "accountId": "4444",
       "nickname": "kwakjaehun"
+    },
+    {
+      "id": "0e29",
+      "date": "2024-06-14",
+      "category": "드디어 끝났다",
+      "cost": "900000",
+      "description": "이제 쉴 수 있어",
+      "accountId": "4444",
+      "nickname": "kwakjaehun"
     }
   ]
 }

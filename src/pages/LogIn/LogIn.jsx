@@ -15,7 +15,7 @@ export const LogIn = () => {
       alert("로그인되었습니다");
       localStorage.setItem("accessToken", data.accessToken);
       api.setAccessToken(data.accessToken);
-      navigate("/home");
+      navigate("/");
     },
   });
 

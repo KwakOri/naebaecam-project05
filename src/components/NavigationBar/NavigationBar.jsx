@@ -33,7 +33,7 @@ export const NavigationBar = () => {
         <StCategory>
           <StCategoryItem
             onClick={() => {
-              navigate("/home");
+              navigate("/");
             }}
           >
             HOME
