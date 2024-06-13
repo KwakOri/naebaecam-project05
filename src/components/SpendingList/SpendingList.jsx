@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import api from "../../api/api";
+import { CustomLoading } from "../CustomLoading";
 import { SpendingItem } from "./SpendingItem";
 import { NoResult, StUl } from "./SpendingList.styled";
 
@@ -19,7 +20,6 @@ const SpendingList = () => {
   });
 
   const selectedMonth = useSelector((state) => state.spendingList.month);
-  console.log(spendingList);
 
   const filteredSpendingList = spendingList
     ? spendingList.filter(
@@ -27,12 +27,10 @@ const SpendingList = () => {
       )
     : [];
 
-  console.log(filteredSpendingList);
-
   // return부분을 두 개로 나누기
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CustomLoading />;
   }
 
   if (filteredSpendingList?.length === 0) {

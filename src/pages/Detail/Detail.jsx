@@ -3,9 +3,10 @@
 import { Input } from "@components";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { validateInputs } from "@utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/api";
+import { AuthLoading } from "../../components/CustomLoading/AuthLoading";
 import { StBtns, StButton, StDiv, StForm } from "./Detail.styled";
 
 const Detail = () => {
@@ -18,28 +19,34 @@ const Detail = () => {
     description: "",
   });
 
-  const { mutateAsync: overwriteRecord } = useMutation({
-    mutationFn: async (inputs) => {
-      const response = await api.posts.overwriteRecord(id, inputs);
-      return response;
-    },
-  });
+  const { mutateAsync: overwriteRecord, isPending: isOverwriting } =
+    useMutation({
+      mutationFn: async (inputs) => {
+        const response = await api.posts.overwriteRecord(id, inputs);
+        return response;
+      },
+    });
 
-  const { mutateAsync: deleteRecord } = useMutation({
+  const { mutateAsync: deleteRecord, isPending: isDeleting } = useMutation({
     mutationFn: async () => {
       const response = await api.posts.deleteRecord(id);
       return response;
     },
   });
 
-  const { isLoading } = useQuery({
-    queryKey: ["record"],
+  const { data, isLoading } = useQuery({
+    queryKey: ["record", id],
     queryFn: async () => {
       const response = await api.posts.getRecord(id);
-      setInputs(response);
       return response;
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      setInputs(data);
+    }
+  }, [data]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -56,6 +63,7 @@ const Detail = () => {
     navigate("/");
   };
   const handleDeleteBtn = async () => {
+    if (!window.confirm("삭제하시겠습니까?")) return;
     await deleteRecord();
 
     alert("삭제가 완료되었습니다");
@@ -64,8 +72,7 @@ const Detail = () => {
   const handleCancelBtn = () => {
     navigate("/");
   };
-
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading || isDeleting || isOverwriting) return <AuthLoading />;
 
   return (
     <>

@@ -12,14 +12,12 @@ class PostsAPI {
   async getRecords() {
     const path = "/records";
     const response = await this.#axios.get(path);
-    console.log(response);
     return response.data;
   }
 
   async getRecord(recordId) {
     const path = `/records/${recordId}`;
     const response = await this.#axios.get(path);
-    console.log(response);
     return response.data;
   }
 

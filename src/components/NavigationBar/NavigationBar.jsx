@@ -13,6 +13,8 @@ import {
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
+  const currLocation = location.pathname;
+  console.log(currLocation);
 
   const logOut = () => {
     localStorage.removeItem("accessToken");
@@ -32,6 +34,8 @@ export const NavigationBar = () => {
         <StTitle>나만의 가계부</StTitle>
         <StCategory>
           <StCategoryItem
+            $loc={currLocation}
+            $path={"/"}
             onClick={() => {
               navigate("/");
             }}
@@ -39,6 +43,8 @@ export const NavigationBar = () => {
             HOME
           </StCategoryItem>
           <StCategoryItem
+            $loc={currLocation}
+            $path={"/my-page"}
             onClick={() => {
               navigate("/my-page");
             }}

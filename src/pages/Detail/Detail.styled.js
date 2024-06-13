@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StButton = styled.button`
+  cursor: pointer;
   margin-right: 10px;
   width: 60px;
   height: 32px;
@@ -17,6 +18,9 @@ const StButton = styled.button`
     }
   }};
   color: white;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 const StDiv = styled.div`

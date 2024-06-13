@@ -27,6 +27,7 @@ const StSpendingItem = styled.div`
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
   .info {
     width: 90%;
     display: flex;

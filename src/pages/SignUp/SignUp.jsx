@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import { Input } from "../../components";
+import { AuthLoading } from "../../components/CustomLoading/AuthLoading";
 import useInputs from "../../hooks/useInputs";
 import { validateSignupInputs } from "../../utils/validation";
 import { Error } from "./Error";
@@ -9,7 +10,7 @@ import { StButton, StContainer, StForm, StTitle } from "./SignUp.styled";
 
 export const SignUp = () => {
   const navigate = useNavigate();
-  const { mutateAsync: signUp } = useMutation({
+  const { mutateAsync: signUp, isPending } = useMutation({
     mutationFn: (formData) => api.auth.signUp(formData),
     onSuccess: (data) => {
       alert(data.message);
@@ -36,6 +37,7 @@ export const SignUp = () => {
 
   const { result: enabled, error } = validateSignupInputs(form);
 
+  if (isPending) return <AuthLoading />;
   return (
     <StContainer>
       <StForm onSubmit={handleSignUp}>

@@ -4,11 +4,12 @@ import api from "../../api/api";
 import { Input } from "../../components";
 import useInputs from "../../hooks/useInputs";
 
+import { AuthLoading } from "../../components/CustomLoading/AuthLoading";
 import { StButton, StContainer, StForm, StTitle } from "./LogIn.styled";
 
 export const LogIn = () => {
   const navigate = useNavigate();
-  const { mutateAsync: LogIn } = useMutation({
+  const { mutateAsync: LogIn, isPending } = useMutation({
     mutationFn: (formData) => api.auth.logIn(formData),
     onSuccess: (data) => {
       console.log(data);
@@ -24,14 +25,16 @@ export const LogIn = () => {
     password: "",
   });
 
-  const handleSignUp = async (e) => {
+  const handleSignUp = (e) => {
     e.preventDefault();
     if (!form.accountId || !form.password) {
       alert("모든 항목을 입력해주세요.");
       return;
     }
-    await LogIn(form);
+    LogIn(form);
   };
+  console.log(isPending);
+  if (isPending) return <AuthLoading />;
 
   return (
     <StContainer>

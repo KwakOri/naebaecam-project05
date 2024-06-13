@@ -1,25 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Input } from "@components";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { getDate, validateInputs } from "@utils";
 import { useState } from "react";
-import api from "../../api/api";
 import { StButton, StForm } from "./Form.styled";
 
-const Form = () => {
+const Form = ({ postRecord }) => {
   const queryClient = useQueryClient();
-  const {
-    data: { id, nickname },
-    isLoading,
-  } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => api.auth.getUser(),
-  });
-
-  const { mutateAsync: postRecord } = useMutation({
-    mutationFn: (record) =>
-      api.posts.postRecord({ ...record, accountId: id, nickname }),
-  });
 
   const [inputs, setInputs] = useState({
     date: getDate(),
@@ -47,7 +34,6 @@ const Form = () => {
       }
       return;
     }
-
     await postRecord(inputs);
     queryClient.invalidateQueries({ queryKey: ["records"] });
 
@@ -59,7 +45,6 @@ const Form = () => {
     });
   };
 
-  if (isLoading) return <div>Loading...</div>;
   return (
     <StForm onSubmit={handleFormSubmit}>
       <Input

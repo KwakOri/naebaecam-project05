@@ -1,7 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
+import { AuthLoading } from "../../components/CustomLoading/AuthLoading";
 import {
   PreviewDummy,
   PreviewImg,
@@ -30,17 +31,17 @@ export const MyPage = () => {
   const avatarRef = useRef(null);
   const nicknameRef = useRef(null);
 
-  const { isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["user"],
-    queryFn: async () => {
-      const userInfo = await api.auth.getUser();
-
-      setPreviewImage(userInfo.avatar);
-      nicknameRef.current.value = userInfo.nickname;
-
-      return userInfo;
+    queryFn: () => {
+      api.auth.getUser();
     },
   });
+
+  useEffect(() => {
+    nicknameRef.current.value = data.nickname;
+    setPreviewImage(data.avatar);
+  }, [data]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +57,7 @@ export const MyPage = () => {
     navigate("/");
   };
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <AuthLoading />;
   return (
     <StContainer>
       <StForm onSubmit={handleSubmit}>

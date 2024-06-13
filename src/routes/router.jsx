@@ -1,7 +1,6 @@
 import { Detail, Home } from "@pages";
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../layouts/Layout";
-import { APITest } from "../pages/APITest";
 import { LogIn } from "../pages/LogIn/LogIn";
 import { MyPage } from "../pages/MyPage";
 import { SignUp } from "../pages/SignUp/SignUp";
@@ -44,11 +43,6 @@ const router = createBrowserRouter([
         element: <LogIn />,
       },
     ],
-  },
-
-  {
-    path: "/apitest",
-    element: <APITest />,
   },
 ]);
 

@@ -39,15 +39,16 @@ export const StCategory = styled.div`
 
 export const StCategoryItem = styled.button`
   padding: 10px 20px;
-  background-color: ${(props) => (props.$active ? "#fff" : "#333")};
-  color: ${(props) => (props.$active ? "#333" : "#fff")};
+  background-color: ${({ $loc, $path }) => ($loc === $path ? "#fff" : "#333")};
+  color: ${({ $loc, $path }) => ($loc === $path ? "#333" : "#fff")};
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: ${({ $loc, $path }) => ($loc === $path ? "900" : "400")};
 `;
 
 export const StDiv = styled.div`
-  height: 100%;
+  height: 60px;
   display: flex;
   align-items: center;
   gap: 20px;

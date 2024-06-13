@@ -17,6 +17,7 @@ const StButton = styled.button`
 
 const StForm = styled.form`
   width: 100%;
+  height: 100px;
   display: flex;
   align-items: flex-end;
   box-sizing: border-box;
