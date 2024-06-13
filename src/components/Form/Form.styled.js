@@ -13,6 +13,7 @@ const StButton = styled.button`
   &:hover {
     background-color: #2563eb;
   }
+  margin-bottom: 8px;
 `;
 
 const StForm = styled.form`
